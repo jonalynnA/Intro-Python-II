@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -33,17 +34,24 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-print("Room north to 'Outside' : ")
-print(room['outside'].n_to.name)
+#print("Room north to 'Outside' : ")
+# print(room['outside'].n_to.name)
+
+
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
+name = input("What shall I call you?: ")
+player = Player(name, room["outside"])
+print(f"Why hello, {player.name}")
+
 
 # Write a loop that:
 #
 # * Prints the current room name
+print(f"You are currently at the: \n{player.current_room.name}")
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
 #
