@@ -55,6 +55,7 @@ room['treasure'].s_to = room['narrow']
 # Make a new player object that is currently in the 'outside' room.
 name = input("\nWhat shall I call you?: ")
 player = Player(name, room["outside"])
+stash = "s"
 print(f"\nWhy hello, {player.name}!")
 
 
@@ -65,9 +66,10 @@ while gameIsPlaying:
     print(f"\nYou are currently at the: \n{player.current_room.name}\n")
 
 # * Prints the current description (the textwrap module might be useful here).
-    print(f"{player.current_room.description}")
+    print(f"{player.current_room.description}",
+          f"\n{player.current_room.item}")
 
-# * Waits for user input and decides what to do.
+    # * Waits for user input and decides what to do.
     userInput = input(
         f"\nWhat now, Adventurer {player.name}? \nChoose the direction you want to go...you can always hightail it out of here by typing [q]\n[N] [S] [E] [W] then [Enter]: ")
 
@@ -76,9 +78,17 @@ while gameIsPlaying:
     if userInput in cardinal_direction:
         player.move(userInput)
 
+# If the user enters "take item" adds item to their stash
+    elif userInput in stash:
+        print(player.stash)
+
+    elif userInput not in cardinal_direction:
+        player.looting(userInput)
+
 # If the user enters "q", quit the game.
     elif userInput == "q":
         gameIsPlaying = False
+
 
 # Print an error message if the movement isn't allowed.
     else:
