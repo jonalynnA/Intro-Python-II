@@ -6,17 +6,17 @@ from items import Items
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons."),
+                     "North of you, the cave mount beckons.", ["keychain"]),
 
     'foyer':    Room("Foyer",
-                     "Dim light filters in from the south. \nDusty passages run north and east."),
+                     "Dim light filters in from the south. \nDusty passages run north and east.", ["elixer", "dagger"]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. \nAhead to the north, a light flickers in
-the distance, \nbut there is no way across the chasm."""),
+the distance, \nbut there is no way across the chasm.""", ["sword", "flashlight"]),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. \nThe smell of gold permeates the air."""),
+to north. \nThe smell of gold permeates the air.""", ["rope"]),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! \nSadly, it has already been completely emptied by
@@ -24,13 +24,13 @@ earlier adventurers. \nThe only exit is to the south."""),
 }
 
 # Declare Items
-items {
+items = {
     'sword': Items("Sword", "A sword soaked in Vervain"),
     'dagger': Items("Dagger", "A dagger made of White Oak"),
     'elixer': Items("Elixer", "An elixer that heals you instantaneously"),
     'rope': Items("Rope", "A long three-strand rope tied with 8 knots"),
     'flashlight': Items("Flashlight", "A solar powered flashlight"),
-    'silver keychain': Items("Silver Keychain", "What looks like a keychain may be the adventurers best tool: A permanent match-striker")
+    'keychain': Items("Silver Keychain", "What looks like a keychain may be the adventurers best tool: A permanent match-striker")
 }
 
 # Link rooms together
