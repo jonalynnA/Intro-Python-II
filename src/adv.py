@@ -5,21 +5,21 @@ from player import Player
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons."),
 
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+    'foyer':    Room("Foyer",
+                     "Dim light filters in from the south. \nDusty passages run north and east."),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
-into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+into the darkness. \nAhead to the north, a light flickers in
+the distance, \nbut there is no way across the chasm."""),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. \nThe smell of gold permeates the air."""),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+chamber! \nSadly, it has already been completely emptied by
+earlier adventurers. \nThe only exit is to the south."""),
 }
 
 
@@ -43,19 +43,33 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-name = input("What shall I call you?: ")
+name = input("\nWhat shall I call you?: ")
 player = Player(name, room["outside"])
-print(f"Why hello, {player.name}")
+print(f"\nWhy hello, {player.name}!")
 
 
 # Write a loop that:
-#
-# * Prints the current room name
-print(f"You are currently at the: \n{player.current_room.name}")
+gameIsPlaying = True
+while gameIsPlaying:
+    # * Prints the current room name
+    print(f"\nYou are currently at the: \n{player.current_room.name}\n")
+
 # * Prints the current description (the textwrap module might be useful here).
+    print(f"{player.current_room.description}")
+
 # * Waits for user input and decides what to do.
-#
+    userInput = input(
+        f"\nWhat now, Adventurer {player.name}? \nChoose the direction you want to go...you can always hightail it out of here by typing [q]\n[N] [S] [E] [W] then [Enter]: ")
+
 # If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
+    cardinal_direction = ["N", "S", "E", "W", "n", "s", "e", "w"]
+    if userInput in cardinal_direction:
+        player.move(userInput)
+
 # If the user enters "q", quit the game.
+    elif userInput == "q":
+        gameIsPlaying = False
+
+# Print an error message if the movement isn't allowed.
+    else:
+        print("\n Woah there, you must choose a Cardinal Direction. To quit, enter: q")
