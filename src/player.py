@@ -16,3 +16,6 @@ class Player:
 
         else:
             print(f"\nOpps, you hit a wall, choose another direction")
+
+    def addItemToPlayer(self, item):  # Add ability to add item to player inventory
+        item.append(item)

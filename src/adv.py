@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from items import Items
 
 # Declare all the rooms
 
@@ -22,6 +23,15 @@ chamber! \nSadly, it has already been completely emptied by
 earlier adventurers. \nThe only exit is to the south."""),
 }
 
+# Declare Items
+items {
+    'sword': Items("Sword", "A sword soaked in Vervain"),
+    'dagger': Items("Dagger", "A dagger made of White Oak"),
+    'elixer': Items("Elixer", "An elixer that heals you instantaneously"),
+    'rope': Items("Rope", "A long three-strand rope tied with 8 knots"),
+    'flashlight': Items("Flashlight", "A solar powered flashlight"),
+    'silver keychain': Items("Silver Keychain", "What looks like a keychain may be the adventurers best tool: A permanent match-striker")
+}
 
 # Link rooms together
 
