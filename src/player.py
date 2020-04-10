@@ -20,17 +20,21 @@ class Player:
         return (f"{self.name}")
 
     def get_inventory(self):
+        # Since inventory is a list of objects cannot do x.items musts use for x in i
         if len(self.inventory) > 0:
-            print(
-                f"You are carrying \n{self.inventory.items.name} : {self.inventory.items.description}")
+            for i in self.inventory:
+                print(
+                    f"\nYou are carrying: \n*{i.name}")
         else:
             print("You have nothing in your inventory.")
 
     def take_item(self, item):  # Add ability to add item to player inventory
         if item not in self.inventory and item in self.current_room.items:
             self.inventory.append(item)
-            print(
-                f"\n*You looted the {self.current_room.items} to your inventory*\nCheck your inventory at any time [i] then [Enter]\n")
+            for i in self.inventory:
+                print(
+                    f"\n\n\nITEM: {i.name}\nDESCIPTION: {i.description}\nFYI: Check your inventory at any time[i] then[Enter]<<<"
+                    "\nTo ditch something from your loot: [drop][x] then [Enter]")
 
         elif item not in self.current_room.items:
             print("There is nothing to loot")
@@ -41,8 +45,9 @@ class Player:
     def drop_item(self, item):  # Add ability to drop item from player inventory
         if item in self.inventory:
             self.inventory.remove(item)
-            print(f"\n You dropped the {item}")
-            self.get_inventory()
+            for i in self.inventory:
+                print(f"\n You dropped the {i.name}")
+                self.get_inventory()
 
         else:
-            print(f"\n You don't have {item} in your inventory")
+            print(f"\n You don't have {i.name} in your inventory")
