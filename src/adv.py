@@ -2,8 +2,17 @@ from room import Room
 from player import Player
 from items import Items
 
-# Declare all the rooms
+# Declare Items
+items = {
+    'sword': Items("Sword", "A sword soaked in Vervain"),
+    'dagger': Items("Dagger", "A dagger made of White Oak"),
+    'elixer': Items("Elixer", "An elixer that heals you instantaneously"),
+    'rope': Items("Rope", "A long three-strand rope tied with 8 knots"),
+    'flashlight': Items("Flashlight", "A solar powered flashlight"),
+    'keychain': Items("Silver Keychain", "What looks like a keychain may be the adventurers best tool: A permanent match-striker")
+}
 
+# Declare all the rooms
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons.", ["keychain"]),
@@ -20,17 +29,7 @@ to north. \nThe smell of gold permeates the air.""", ["rope"]),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! \nSadly, it has already been completely emptied by
-earlier adventurers. \nThe only exit is to the south."""),
-}
-
-# Declare Items
-items = {
-    'sword': Items("Sword", "A sword soaked in Vervain"),
-    'dagger': Items("Dagger", "A dagger made of White Oak"),
-    'elixer': Items("Elixer", "An elixer that heals you instantaneously"),
-    'rope': Items("Rope", "A long three-strand rope tied with 8 knots"),
-    'flashlight': Items("Flashlight", "A solar powered flashlight"),
-    'keychain': Items("Silver Keychain", "What looks like a keychain may be the adventurers best tool: A permanent match-striker")
+earlier adventurers. \nThe only exit is to the south.""", None)
 }
 
 # Link rooms together
@@ -44,7 +43,7 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#print("Room north to 'Outside' : ")
+# print("Room north to 'Outside' : ")
 # print(room['outside'].n_to.name)
 
 
@@ -55,40 +54,49 @@ room['treasure'].s_to = room['narrow']
 # Make a new player object that is currently in the 'outside' room.
 name = input("\nWhat shall I call you?: ")
 player = Player(name, room["outside"])
-stash = "s"
+
 print(f"\nWhy hello, {player.name}!")
 
+cardinal_direction = ["N", "S", "E", "W", "n", "s", "e", "w"]
+verb_support = ["y", "n", "Y", "N", "loot", "take"]
+inventory = "i"
 
 # Write a loop that:
 gameIsPlaying = True
 while gameIsPlaying:
     # * Prints the current room name
-    print(f"\nYou are currently at the: \n{player.current_room.name}\n")
+    print(f"\nYou are currently at the: {player.current_room.name}")
 
-# * Prints the current description (the textwrap module might be useful here).
-    print(f"{player.current_room.description}",
-          f"\n{player.current_room.item}")
+    # * Prints the current description (the textwrap module might be useful here).
+    print(f">>> {player.current_room.description} <<<\n",
+          f"\n *** There's some loot *** \n    {player.current_room.items}")
 
-    # * Waits for user input and decides what to do.
-    userInput = input(
+    user_input_item = input(
+        f"\n ** Would you like to take this loot? **\n[loot] [take] [y] [n] then [Enter]: ")
+
+ # Player can move
+    user_input_direction = input(
         f"\nWhat now, Adventurer {player.name}? \nChoose the direction you want to go...you can always hightail it out of here by typing [q]\n[N] [S] [E] [W] then [Enter]: ")
 
 # If the user enters a cardinal direction, attempt to move to the room there.
-    cardinal_direction = ["N", "S", "E", "W", "n", "s", "e", "w"]
-    if userInput in cardinal_direction:
-        player.move(userInput)
+# If the user enters a "take" command, add item to player inventory
+# If the user enters i display inventory
 
-# If the user enters "take item" adds item to their stash
-    elif userInput in stash:
-        print(player.stash)
+    if user_input_direction in cardinal_direction:
+        player.move(user_input_direction)
 
-    elif userInput not in cardinal_direction:
-        player.looting(userInput)
+    elif user_input_item in verb_support:
+        player.take_item(player.current_room.items)
+
+    elif user_input_item == 'n':
+        print("Hope you didn't need that.")
+
+    elif user_input_item == "i":
+        player.get_inventory
 
 # If the user enters "q", quit the game.
-    elif userInput == "q":
+    elif user_input_direction == "q":
         gameIsPlaying = False
-
 
 # Print an error message if the movement isn't allowed.
     else:

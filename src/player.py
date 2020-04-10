@@ -3,35 +3,46 @@
 
 
 class Player:
-    def __init__(self, name, current_room, stash=[]):
+    def __init__(self, name, current_room, inventory=[]):
         self.name = name
         self.current_room = current_room
-        self.stash = stash
+        self.inventory = inventory
 
     def move(self, direction):
         if getattr(self.current_room, f"{direction}_to") is not None:
             self.current_room = getattr(
-                self.current_room, f"{direction}_to", self.current_room.item)
+                self.current_room, f"{direction}_to", self.current_room.items)
 
         else:
             print(f"\nOpps, you hit a wall, choose another direction")
 
-    def addItemToPlayer(self, item):  # Add ability to add item to player stash
-        item.append(item)
+    def __str__(self):
+        return (f"{self.name}")
 
-    def looting(self, loot):  # Add ability to loot the item into stash
-        loot = loot.split(" ")
-        if loot[0] == "take":
-            if loot[1] in self.current_room.item:
-                self.current_room.item.remove(loot[1])
-                self.stash.append(loot[1])
-                return print(f"You have looted {loot[1]} into your stash")
-            else:
-                print("Unable to Loot")
-        elif loot[0] == "drop":
-            if loot[1] not in self.current_room.item:
-                self.stash.remove(loot[1])
-                self.current_room.item.append(loot[1])
-                return print(f"You have dropped {loot[1]}")
-            else:
-                print(f"That item is not in your stash ")
+    def get_inventory(self):
+        if len(self.inventory.items) > 0:
+            print(
+                f"You are carrying \n{self.inventory.items.name} : {self.inventory.items.description}")
+        else:
+            print("You have nothing in your inventory.")
+
+    def take_item(self, item):  # Add ability to add item to player inventory
+        if item not in self.inventory and item in self.current_room.items:
+            self.inventory.append(item)
+            print(
+                f"\n*You looted the {self.current_room.items} to your inventory*\nCheck your inventory at any time [i] then [Enter]\n")
+
+        elif item not in self.current_room.items:
+            print("There is nothing to loot")
+
+        else:
+            print("You already grabbed the loot")
+
+    def drop_item(self, item):  # Add ability to drop item from player inventory
+        if item in self.inventory:
+            self.inventory.remove(item)
+            print(f"\n You dropped the {item}")
+            self.get_inventory()
+
+        else:
+            print(f"\n You don't have {item} in your inventory")
