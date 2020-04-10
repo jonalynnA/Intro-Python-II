@@ -20,7 +20,7 @@ class Player:
         return (f"{self.name}")
 
     def get_inventory(self):
-        if len(self.inventory.items) > 0:
+        if len(self.inventory) > 0:
             print(
                 f"You are carrying \n{self.inventory.items.name} : {self.inventory.items.description}")
         else:

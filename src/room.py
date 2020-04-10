@@ -16,4 +16,4 @@ class Room:
         return (f"{self.name}, \n{self.description}, \n{self.items}")
 
     def add_item_to_room(self, item):  # Add capability to add items to room
-        self.items.append(item)
+        item.append(item)
