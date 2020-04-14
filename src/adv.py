@@ -2,6 +2,17 @@ from room import Room
 from player import Player
 from items import Items
 
+# Term Colors
+black = '\033[30m'
+red = '\033[31m'
+green = '\033[32 m'
+yellow = '\033[33 m'
+blue = '\033[34 m'
+magenta = '\033[35 m'
+cyan = '\033[36 m'
+white = '\033[37 m'
+reset_color = '\033[39 m'
+
 # Declare Items
 items = {
     'sword': Items("Sword", "A sword soaked in Vervain"),
@@ -48,12 +59,12 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-name = input("\nWhat shall I call you?: ")
+name = input(red + "\nWhat shall I call you?: \033[37m")
 player = Player(name, room["outside"])
 
 print(f"\n\n\nWhy hello, {player.name}!")
 
-cardinal_direction = ["N", "S", "E", "W", "n", "s", "e", "w"]
+cardinal_direction = ["n", "s", "e", "w"]
 verb_support = ["y", "Y", "loot", "take", "keychain", "sword",
                 "dagger", "elixer", "rope", "silver keychain", "flashlight"]
 drop = ["drop", "leave", "x"]
@@ -79,7 +90,7 @@ while gameIsPlaying:
                 "><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><")
 
     user_input_item = input(
-        f"\n ** Would you like to take this loot? **\n[loot] [take] [y] [n] then [Enter]: ")
+        red + f"\n ** Would you like to take this loot? **\n[loot] [take] [y] [n] then [Enter]: \033[37m").lower()
     if user_input_item in verb_support:
         for item in player.current_room.items:
             player.take_item(item)
@@ -94,7 +105,7 @@ while gameIsPlaying:
         player.get_inventory()
  # Player can move
     user_input_direction = input(
-        f"\nWhat now, Adventurer {player.name}? \nChoose the direction you want to go...you can always hightail it out of here by typing [q]\n[N] [S] [E] [W] then [Enter]: ")
+        f"\nWhat now, Adventurer {player.name}? \nChoose the direction you want to go...you can always hightail it out of here by typing [q] \033[36m\n[N] [S] [E] [W] then [Enter]: \033[37m").lower()
 
 # If the user enters a cardinal direction, attempt to move to the room there.
 # If the user enters a "take" command, add item to player inventory
